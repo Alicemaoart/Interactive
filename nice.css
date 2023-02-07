@@ -1,0 +1,55 @@
+body {
+  font-size: 1.4rem;
+  text-rendering: optimizeLegibility;
+  background-color: black;
+
+  font-family: sans-serif;
+  color:white;
+}
+
+img { 
+  border: none;
+  max-width: 100%;
+}
+
+h1 {
+  text-align: center;
+  font-size: 1em;
+  color: tomato;
+  margin-bottom: .3em; 
+}
+
+#room {
+  display: flex;
+  justify-content: center;
+  align-items: center;
+
+}
+
+/*
+.container {
+  display:flex;
+  flex-direction:row;
+  flex-wrap:wrap;
+  justify-content: space-around;
+  border-style: dotted;
+  border-color: white;
+  color:white;
+}
+*/
+
+.container {
+
+  display:flex;
+  flex-direction:row;
+  grid-template-rows: 40px 40px 40px;
+  grid-gap: 30px;
+  justify-content: center;
+}
+
+.item:hover {
+  background-color: tomato;
+  border-style: solid;
+  border-color:tomato;
+}
+
