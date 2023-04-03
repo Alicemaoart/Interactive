@@ -1,0 +1,165 @@
+<!DOCTYPE html>
+<html lang="en">
+  <head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <meta http-equiv="X-UA-Compatible" content="ie=edge">
+    <title>the after</title>
+    <style>
+    body {
+      background-color: lightgray;
+      font-family: monospace;
+    }
+
+    * {
+        box-sizing: border-box;
+    } 
+    .column {
+    float: left;
+    width: 30%;
+    padding: 10px;
+    margin: 30px;
+    }
+
+    .row:after {
+    content: "";
+    display: table;
+    clear: both;
+    }
+
+    h2 { margin: 30px }
+
+    #logContainer {
+  font-family: monospace;
+  white-space: pre-wrap;
+  border: 1px solid black;
+  padding: 8px;
+  margin-top: 16px;
+  height: 100px;
+  overflow-y: scroll;
+}
+    #newButton {
+      display:none;
+    }
+    </style>
+  </head>
+  <body>
+    <br> <br> <br> <br> <br> <br>
+    <h2> the after </h2>
+    <br> <br>
+  <div class="row">
+    <div class="column">
+          <button id="countButton">Explore Onwards</button>
+          <p> steps taken: <p id="countDisplay">0</p> </p>
+          <br> <br>
+ 
+          <button id="newButton">Pick Berry</button> 
+          <p> berry count: <p id="newCountDisplay">0</p> </p>
+          <br> <br>
+
+<!--
+          <button>Lure Critter</button> 
+          <p> Cost: 20 berry</p>
+          <p> Omis caught: 1</p>
+          <br> <br>
+  -->
+    </div>
+    <div class="column" style="background-color: white;">
+
+        <p> travel log </p>
+        <div id="logContainer"></div>
+    </div>
+  </div>
+	<script>
+// Get references to the button, count display, and log container elements
+const countButton = document.getElementById('countButton');
+const countDisplay = document.getElementById('countDisplay');
+const logContainer = document.getElementById('logContainer');
+const newButton = document.getElementById('newButton');
+const newCountDisplay = document.getElementById('newCountDisplay');
+// Define an array of log messages in the order you want them to appear
+const logMessages = [
+  "You walk out of the light. And arrive at a field. Is this great beyond?",
+  " ",
+  "The grass comes up to your chest, and rustles gently in the breeze. ",
+  "The air smells fresh here. Saturated with oxygen. ",
+  " ",
+  " ",
+  " ",
+  " ",
+  "It’s not long before you first see one out of the corner of your eye. ",
+  "It darts away before you can get too close. Mysterious critter.",
+  " ",
+  "You’re approaching the edge of the tall grass. You can hear a creek in the distance, the cool rush of water.",
+  " ",
+  " ",
+  " ",
+  "The tall grass ends. A wild bramble of blackberries stands before you. Impenetrable, but delicious. ",
+  "A delicious berry.",
+  "Another delicious berry.",
+  "Yet another delicious berry. Maybe if you collect enough of these, you can lure out one of the little creatures...",
+  " ",
+  " ",
+  " ",
+  " ",
+  "You throw a couple of berries out in the direction of a critter. It startles, but then approaches. They’re like nothing you’ve ever seen before. Fuzzy and round, like bunnies. ",
+  "Little creatures. Just small enough to fit on your palm. They make one noise. Mi. Over and over again. Mimimimi. Maybe they need another friend.",
+  "You decide to call them Omis, after the sound they make",
+  "Omi’s are little helpers. They happily gather in little groups to pick the berries.",
+  " They hop to a section of the bramble, where under the chaos, you can see a crawlspace just large enough for a human to fit through.",
+];
+
+// Initialize the count and message index to 0
+let count = 0;
+let messageIndex = 0;
+
+// Set up a click event listener for the button
+countButton.addEventListener('click', () => {
+    if (count === 16) {
+    return;
+  }
+  // Increment the count
+  count++;
+
+  // Update the count display
+  countDisplay.innerText = count.toString();
+
+  // Get the next log message from the array
+  const logMessage = logMessages[messageIndex];
+
+  // Log the new message to the console
+  console.log(logMessage);
+
+  // Insert the new message at the beginning of the log container
+  logContainer.insertAdjacentHTML('afterbegin', `<p>${logMessage}</p>`);
+
+  // Increment the message index or reset it to 0 if we've reached the end of the array
+  messageIndex = (messageIndex + 1) % logMessages.length;
+});
+
+  if (count === 16) {
+    countButton.setAttribute('disabled', 'true');
+    countButton.style.backgroundColor = 'grey';
+  
+    const newButton = document.createElement('button');
+    newButton.innerText = 'New Button';
+    newButton.setAttribute('id', 'newButton');
+    
+    // Create a new count display element
+    const newCountDisplay = document.createElement('p');
+    newCountDisplay.innerText = '0';
+    
+    // Insert the new button and count display into the DOM
+    countButton.insertAdjacentElement('afterend', newButton);
+    newButton.insertAdjacentElement('afterend', newCountDisplay);
+    
+    // Set up a click event listener for the new button
+    newButton.addEventListener('click', () => {
+      // Increment the count for the new button
+      const newCount = parseInt(newCountDisplay.innerText) + 1;
+      newCountDisplay.innerText = newCount.toString();
+    });
+  }
+  </script>
+  </body>
+</html>

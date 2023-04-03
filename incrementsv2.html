@@ -1,0 +1,321 @@
+<!DOCTYPE html>
+<html lang="en">
+  <head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <meta http-equiv="X-UA-Compatible" content="ie=edge">
+    <title>The After</title>
+    <link rel="icon" type="image/png" href="images/moonpixel.png"/>
+    <style type="text/css">
+      body {
+  background: linear-gradient(-45deg, #ee7752, #e73c7e, #23a6d5, #23d5ab);
+   background-size: 400% 400%;
+  animation: gradient 15s ease infinite;
+  height: 100vh;
+       /*background-grad: lightskyblue;
+      background-image: url(images/giphy.gif); */
+      font-family: monospace;
+      color: white;
+    }
+
+body {
+  background: radial-gradient(
+      circle at 50% 0,
+      rgba(255, 0, 0, 0.5),
+      rgba(255, 0, 0, 0) 70.71%
+    ), radial-gradient(
+      circle at 6.7% 75%,
+      rgba(0, 0, 255, 0.5),
+      rgba(0, 0, 255, 0) 70.71%
+    ),
+    radial-gradient(
+        circle at 93.3% 75%,
+        rgba(0, 255, 0, 0.5),
+        rgba(0, 255, 0, 0) 70.71%
+      ) beige;
+  border-radius: 50%;
+  background-size: 150% 150%;
+  animation: gradient 15s ease infinite;
+  height: 100vh;
+}
+
+@keyframes gradient {
+  0% {
+    background-position: 0% 100%;
+  }
+  50% {
+    background-position: 100% 50%;
+  }
+  100% {
+    background-position: 0% 100%;
+  }
+}
+
+    * {
+        box-sizing: border-box;
+        outline:none;
+    } 
+    .column {
+    width: 50%;
+    padding: 10px;
+    margin: 50px;
+    color:black;
+    }
+
+    .columnOmi {
+    width: 50%;
+    padding: 10px;
+    margin: 50px;
+    }
+
+    h2 { margin: 30px }
+
+    #logContainer {
+  font-family: monospace;
+  white-space: pre-wrap;
+  border: 1px solid black;
+  padding: 8px;
+  margin-top: 16px;
+  height: 100px;
+  overflow-y: scroll;
+}
+
+    #omiLog {
+  font-family: monospace;
+  white-space: pre-wrap;
+  border: none;
+  padding: 8px;
+  margin-top: 16px;
+  height: 100px;
+  overflow-y: hidden;
+}
+
+.fadeToBlack {
+  position: fixed;
+  left: 0;
+  bottom: 0;
+  width: 180%;
+  height: 50%;
+background: rgb(0,0,0);
+background: linear-gradient(0deg, rgba(0,0,0,1) 35%, rgba(29,36,121,0.9134615384615384) 50%, rgba(255,255,255,0) 90%);
+mix-blend-mode: multiply;
+}
+
+    </style>
+  </head>
+  <body>
+    <center>
+    <h2>The After</h2>
+
+    <button id="countButton" style="color:black">Explore Onwards</button>
+    <p> steps taken: <p id="countDisplay">0</p> </p>
+
+  <div id="berryFeature" style="display: none;">
+    <button onclick="collectBerries()">Pick Berries</button>
+    <p id="berriesCollected">0 Berries</p>
+    <button onclick="buyBerriesPerClick()" id="perClickUpgrade">Catch Omi (Currently 1) Cost: 10 Berries</button>
+    <p> each omi collects 1 berry / second </p>
+  </div>
+
+<div class="column">
+  <div id="columnOmi" style="background-color: white; display:none;">
+        <br>
+        <p> omi log </p>
+        <div id="omiLog"></div>
+  </div>
+</div>
+<br>
+<br>
+
+  <div class="column" style="background-color: white; display:block;">
+        <p> travel log </p>
+        <div id="logContainer"></div>
+  </div>
+
+<div class="fadeToBlack">
+</div>
+
+    </center>
+
+
+    <script type="text/javascript">
+  /*
+ 
+
+      */
+
+      var gameData = {
+        berries: 0,
+        berriesPerClick: 1,
+        berriesPerClickCost: 10
+      };
+
+      function collectBerries() {
+        gameData.berries += gameData.berriesPerClick;
+        document.getElementById("berriesCollected").innerHTML = gameData.berries + " Berries";
+      }
+
+      function buyBerriesPerClick() {
+        if (gameData.berries >= gameData.berriesPerClickCost) {
+          gameData.berries -= gameData.berriesPerClickCost;
+          gameData.berriesPerClick += 1;
+          gameData.berriesPerClickCost *= 2;
+          document.getElementById("berriesCollected").innerHTML = gameData.berries + " Berries";
+          document.getElementById("perClickUpgrade").innerHTML = "Catch Omi (Currently " + gameData.berriesPerClick + ") Cost: " + gameData.berriesPerClickCost + " Berries";
+        }
+      }
+
+      // Call buyBerriesPerClick once to update the UI
+      buyBerriesPerClick();
+
+      // Start the main game loop
+      var mainGameLoop = window.setInterval(function() {
+        collectBerries();
+      }, 1000);
+
+const countButton = document.getElementById('countButton');
+const countDisplay = document.getElementById('countDisplay');
+const logContainer = document.getElementById('logContainer');
+const omiLog = document.getElementById('omiLog');
+var berryFeature = document.getElementById("berryFeature")
+var columnOmi = document.getElementById("columnOmi")
+var column = document.getElementById("column")
+// Define an array of log messages in the order you want them to appear
+const logMessages = [
+  "You walk out of the light. And arrive at a field. Is this great beyond?",
+  " ",
+  "The grass comes up to your chest, and rustles gently in the breeze. ",
+  "The air smells fresh here. Saturated with oxygen. ",
+  " ",
+  " ",
+  " ",
+  " ",
+  "It’s not long before you first see one out of the corner of your eye. ",
+  "It darts away before you can get too close. Mysterious critter.",
+  " ",
+  "You’re approaching the edge of the tall grass. You can hear a creek in the distance, the cool rush of water.",
+  " ",
+  " ",
+  "The tall grass ends. A wild bramble of blackberries stands before you. Impenetrable, but delicious. You grab a handful.",
+  " ",
+];
+
+// Initialize the count and message index to 0
+let count = 0;
+let messageIndex = 0;
+
+// Set up a click event listener for the button
+countButton.addEventListener('click', () => {
+    if (count === 16) {
+    return;
+  }
+
+  // Update the count display
+  countDisplay.innerText = count.toString();
+
+  // Get the next log message from the array
+  const logMessage = logMessages[messageIndex];
+
+  // Log the new message to the console
+  console.log(logMessage);
+
+  // Insert the new message at the beginning of the log container
+  logContainer.insertAdjacentHTML('afterbegin', `<p>${logMessage}</p>`);
+
+  // Increment the message index or reset it to 0 if we've reached the end of the array
+  messageIndex = (messageIndex + 1) % logMessages.length;
+});
+
+  if (count === 16) {
+    countButton.setAttribute('disabled', 'true');
+
+  }
+ countButton.addEventListener("click", function() {
+  if (messageIndex < logMessages.length) {
+    //logContainer.innerHTML += logMessages[messageIndex] + "<br>";
+    //messageIndex++;
+    count++;
+    countDisplay.innerHTML = count;
+  }
+  if (count >= 16 && berryFeature.style.display === "none" ) {
+    berryFeature.style.display = "block";
+    countButton.style.color = "grey" ; 
+  }
+
+    if (count >= 16 && columnOmi.style.display === "none" ) {
+    columnOmi.style.display = "block";
+  }
+});
+
+/*
+const omiLog = [
+  " ",
+  " ",
+  " ",
+  "A delicious berry.",
+  "Another delicious berry.",
+  "Yet another delicious berry. Maybe if you collect enough of these, you can lure out one of the little creatures...",
+  " ",
+  " ",
+  " ",
+  " ",
+  "You throw a couple of berries out in the direction of a critter. It startles, but then approaches. They’re like nothing you’ve ever seen before. Fuzzy and round, like bunnies. ",
+  "Little creatures. Just small enough to fit on your palm. They make one noise. Mi. Over and over again. Mimimimi. Maybe they need another friend.",
+  "You decide to call them Omis, after the sound they make",
+  "Omi’s are little helpers. They happily gather in little groups to pick the berries.",
+  " They hop to a section of the bramble, where under the chaos, you can see a crawlspace just large enough for a human to fit through.",
+  " ",
+];
+
+ 
+// Initialize the count and message index to 0
+let count = 0;
+let messageIndex = 0;
+
+// Set up a click event listener for the button
+countButton.addEventListener('click', () => {
+    if (count === 16) {
+    return;
+  }
+
+  // Update the count display
+  countDisplay.innerText = count.toString();
+
+  // Get the next log message from the array
+  const logMessage = logMessages[messageIndex];
+
+  // Log the new message to the console
+  console.log(logMessage);
+
+  // Insert the new message at the beginning of the log container
+  logContainer.insertAdjacentHTML('afterbegin', `<p>${logMessage}</p>`);
+
+  // Increment the message index or reset it to 0 if we've reached the end of the array
+  messageIndex = (messageIndex + 1) % logMessages.length;
+});
+
+  if (count === 16) {
+    countButton.setAttribute('disabled', 'true');
+
+  }
+ countButton.addEventListener("click", function() {
+  if (messageIndex < logMessages.length) {
+    //logContainer.innerHTML += logMessages[messageIndex] + "<br>";
+    //messageIndex++;
+    count++;
+    countDisplay.innerHTML = count;
+  }
+  if (count >= 16 && berryFeature.style.display === "none" ) {
+    berryFeature.style.display = "block";
+    countButton.style.color = "grey" ; 
+  }
+
+    if (count >= 16 && columnOmi.style.display === "none" ) {
+    columnOmi.style.display = "block";
+  }
+});
+
+*/
+    </script>
+  </body>
+</html>

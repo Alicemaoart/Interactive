@@ -1,0 +1,174 @@
+<!DOCTYPE html>
+<html>
+<head>
+  <title>omimon</title>
+  <style>
+    body {
+      color:#422800;
+      background-color:black;
+      padding: 40px;
+      font-family: monospace;
+    }
+
+    .webpet-container {
+      display: flex;
+      flex-direction: column;
+      align-items: center;
+      margin: 15px;
+      border: 1px #422800 solid;
+      border-radius: 300px;
+      background-color:pink;
+    }
+    
+    .webpet-home {
+      display: fixed;
+      padding: 50px;
+      align-items: center;
+      border: 1px #422800 solid;
+      background-color:white;
+    }
+    
+    .webpet-face {
+      font-size: 20px;
+      animation: wiggle 1s linear infinite, walk 5s ease-in-out infinite;;
+    }
+    
+    .logContainer {
+      font-family: monospace;
+      white-space: pre-wrap;
+      border: 1px solid #422800;
+      padding: 20px;
+      height: 100px;
+      width: 200px;
+      overflow-y: auto;
+      background-color: #ffebeb;
+      font-color: black;
+    }
+
+    .webpet-happiness {
+      font-size: 20px;
+    }
+    
+    .webpet-buttons {
+      display: flex;
+      justify-content: center;
+    }
+    
+    .webpet-buttons button {
+      margin: 15px;
+      padding: 5px;
+      background-color: #ffebeb;
+      border: 1px solid #422800;
+      border-radius: 30px;
+      box-shadow: #422800 4px 4px 0 0;
+      color: #422800;
+      cursor: pointer;
+      font-weight: 600;
+      font-size: 18px;
+      padding: 0 18px;
+      line-height: 50px;
+      text-align: center;
+      text-decoration: none;
+      user-select: none;
+      -webkit-user-select: none;
+      touch-action: manipulation;
+      font-family: monospace;
+    }
+
+    @keyframes wiggle {
+  0% { transform: rotateZ(-5deg); }
+  20% { transform: rotateZ(0deg); }
+  40% { transform: rotateZ(-5deg); }
+  60% { transform: rotateZ(0deg); }
+  80% { transform: rotateZ(-5deg); }
+  100% { transform: rotateZ(0deg); }
+}
+
+@keyframes walk {
+  0% { transform: translateX(0); }
+  24% { transform: translateX(-20px); }
+  80% { transform: translateX(-2px); }
+  100% { transform: translateX(-10); }
+}
+  </style>
+</head>
+<body>
+  <div class="webpet-container">
+    <h1> omimon </h1>
+    <div class="webpet-home">
+      <div class="webpet-face">(´｡• - •｡`)/ </div>
+    </div>
+    <br>
+    <div class="logContainer">
+      <p>mimi log: a log for your omi's thoughts and feelings!</p> 
+      <div id="log">
+    </div> </div>
+   <h3> full happiness: 100 </h3>
+    <div class="webpet-happiness">current happiness: <span id="happiness-value">72</span></div>
+    <div class="webpet-buttons">
+      <button id="pet-button">Pet</button>
+      <button id="feed-button">Feed</button>
+      <button id="kiss-button">Kiss</button>
+    </div>
+  </div>
+
+  <script>
+    let happinessValue = 72;
+    const happinessSpan = document.getElementById('happiness-value');
+    const petButton = document.getElementById('pet-button');
+    const feedButton = document.getElementById('feed-button');
+    const kissButton = document.getElementById('kiss-button');
+    
+    petButton.addEventListener('click', () => {
+      increaseHappiness(4);
+    });
+    
+    feedButton.addEventListener('click', () => {
+      increaseHappiness(9);
+    });
+    
+    kissButton.addEventListener('click', () => {
+      increaseHappiness(3);
+    });
+    
+    setInterval(() => {
+      decreaseHappiness(2);
+    }, 1000);
+    
+    function increaseHappiness(value) {
+      happinessValue += value;
+      if (happinessValue > 72) {
+        happinessValue = 72;
+      }
+      happinessSpan.textContent = happinessValue;
+    }
+    
+    function decreaseHappiness(value) {
+      happinessValue -= value;
+      if (happinessValue < 0) {
+        happinessValue = 0;
+      }
+      happinessSpan.textContent = happinessValue;
+    }
+
+    function displayRandomMessage() {
+      const messages = [
+        "Welcome to my website",
+        "Thanks for visiting",
+        "Please come again", 
+        "Omis are not meant to live in captivity..."
+      ];
+      const randomIndex = Math.floor(Math.random() * messages.length);
+      const randomMessage = messages[randomIndex];
+      const logElement = document.getElementById("log");
+      const newLogMessage = document.createElement("p");
+      newLogMessage.innerText = randomMessage;
+      logElement.appendChild(newLogMessage);
+      setTimeout(displayRandomMessage, Math.floor(Math.random() * 13000) + 2000);
+    }
+    window.onload = displayRandomMessage;
+
+
+  </script>
+</body>
+</html>

@@ -1,0 +1,96 @@
+<!DOCTYPE html>
+<html>
+  <head>
+    <title>Primordial Sea</title>
+    <style>
+      body {
+        margin: 0;
+        padding: 0;
+        overflow: hidden;
+        background-color:darkblue;
+       filter: blur(8px); 
+      }
+    </style>
+  </head>
+  <body>
+    <canvas id="canvas"></canvas>
+    <script>
+      alert("PRIMORDIAL SEA: resize me, and watch me multiply.");
+      const canvas = document.getElementById('canvas');
+      const ctx = canvas.getContext('2d');
+      
+      let width, height;
+      let particles = [];
+
+      function Particle(x, y, radius, color) {
+        this.x = x;
+        this.y = y;
+        this.radius = radius;
+        this.color = color;
+        this.velocity = {
+          x: (Math.random() - 0.5) * 2,
+          y: (Math.random() - 0.5) * 2
+        };
+        
+        this.draw = function() {
+          ctx.beginPath();
+          ctx.arc(this.x, this.y, this.radius, 0, Math.PI * 2, false);
+          ctx.fillStyle = "rgba(255, 192, 203, 0.9)";
+          ctx.fill();
+        };
+        
+        this.update = function() {
+          if (this.x + this.radius > width || this.x - this.radius < 0) {
+            this.velocity.x = -this.velocity.x;
+          }
+          if (this.y + this.radius > height || this.y - this.radius < 0) {
+            this.velocity.y = -this.velocity.y;
+          }
+          this.x += this.velocity.x * 0.5;
+          this.y += this.velocity.y * 0.5;
+          
+          this.draw();
+        };
+      }
+
+      function init() {
+        width = window.innerWidth;
+        height = window.innerHeight;
+        
+        canvas.width = width;
+        canvas.height = height;
+        
+        for (let i = 0; i < 100; i++) {
+          const x = Math.random() * width;
+          const y = Math.random() * height;
+          const radius = Math.random() * 5 + 1;
+          const color = `hsl(${Math.random() * 360}, 50%, 50%)`;
+          particles.push(new Particle(x, y, radius, color));
+        }
+      }
+
+      function animate() {
+        requestAnimationFrame(animate);
+        
+        ctx.clearRect(0, 0, width, height);
+        
+        particles.forEach(particle => {
+          particle.update();
+        });
+      }
+
+      window.addEventListener('resize', function() {
+        width = window.innerWidth;
+        height = window.innerHeight;
+        
+        canvas.width = width;
+        canvas.height = height;
+
+        init();
+      });
+
+      init();
+      animate();
+    </script>
+  </body>
+</html>

@@ -1,0 +1,97 @@
+<!DOCTYPE html>
+<html>
+  <head>
+    <meta charset="utf-8">
+    <title>Snow Screensaver</title>
+    <style>
+      html, body {
+        margin: 0;
+        padding: 0;
+        overflow: hidden;
+        filter: blur(3px); 
+      }
+      canvas {
+        display: block;
+        background-color: #c3cfe7;
+      }
+
+
+    </style>
+  </head>
+  <body>
+    <canvas id="canvas"></canvas>
+    <script>
+      // Set up the canvas
+      const canvas = document.getElementById('canvas');
+      const ctx = canvas.getContext('2d');
+
+      // Set the canvas dimensions to match the window size
+      canvas.width = window.innerWidth;
+      canvas.height = window.innerHeight;
+
+      // Set the number of raindrops
+      const numDrops = 1000;
+
+      // Set the raindrop size range
+      const minSize = 5;
+      const maxSize = 20;
+
+      // Set the raindrop speed range
+      const minSpeed = .001;
+      const maxSpeed = 1;
+
+      // Set the gravity force
+      const gravity = 5.81;
+
+      // Set the wind speed
+      const windSpeed = 0;
+
+      // Initialize the raindrops
+      const drops = [];
+      for (let i = 0; i < numDrops; i++) {
+        drops.push({
+          x: Math.random() * canvas.width,
+          y: Math.random() * -canvas.height,
+          size: Math.random() * (maxSize - minSize) + minSize,
+          speed: Math.random() * (maxSpeed - minSpeed) + minSpeed,
+          angle: Math.PI / 2 + (Math.random() - 0.5) * Math.PI / 4,
+          color: 'rgba(255, 255, 255, ' + Math.random() + ')'
+        });
+      }
+
+      // Update the raindrops
+      function update() {
+        // Clear the canvas
+        ctx.clearRect(0, 0, canvas.width, canvas.height);
+
+        // Update each raindrop
+        drops.forEach(drop => {
+          // Calculate the new position of the raindrop
+          const vx = drop.speed * Math.cos(drop.angle) + windSpeed;
+          const vy = drop.speed * Math.sin(drop.angle) + gravity;
+          drop.x += vx;
+          drop.y += vy;
+
+          // Check if the raindrop is off the screen
+          if (drop.y > canvas.height) {
+            drop.y = Math.random() * -canvas.height;
+            drop.x = Math.random() * canvas.width;
+          }
+
+          // Draw the raindrop
+          ctx.fillStyle = drop.color;
+          ctx.beginPath();
+          ctx.arc(drop.x, drop.y, drop.size / 2, 0, Math.PI * 2);
+          ctx.fill();
+
+        });
+
+        // Schedule the next update
+        requestAnimationFrame(update);
+      }
+
+      // Start the animation loop
+      update();
+    </script>
+  </body>
+</html>
