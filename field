@@ -1,0 +1,19 @@
+<!DOCTYPE html>
+<html lang="en">
+  <head>
+    <title> loading </title>
+    <meta http-equiv="refresh" content="0;URL='https://ghostmuji.github.io/interactive/billboard/intro'" /> 
+    <link rel="preconnect" href="https://fonts.googleapis.com">
+<link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+<link href="https://fonts.googleapis.com/css2?family=Noto+Serif+JP:wght@200&display=swap" rel="stylesheet">
+    <link rel="stylesheet" href="./style.css">
+    <link rel="icon" href="./favicon.ico" type="image/x-icon">
+  </head>
+  <body>
+    <div class=centered>
+        <div class="child" id="prompt"> <h1> ✿ </h1> </div> 
+	<script src="index.js">
+    
+  </script>
+  </body>
+</html>
